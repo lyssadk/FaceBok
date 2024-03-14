@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "https://facebok-2q7r.onrender.com",
+  "host": "facebok-2q7r.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
