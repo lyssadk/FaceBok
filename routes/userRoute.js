@@ -5,12 +5,8 @@ router.get("/:id", user.getUser);
 
 router.post("/", user.createUser);
 
-router.put("/:id", (req, res) => {
-    res.send("For updating one user")
-});
+router.put("/:id", user.updateUser);
 
-router.delete("/:id", (req, res) => {
-    res.send("For deleting one user")
-});
+router.delete("/:id", user.deleteUser);
 
 module.exports = router;
