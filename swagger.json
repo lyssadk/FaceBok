@@ -260,9 +260,41 @@
     "/users/": {
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "given_name": {
+                  "example": "any"
+                },
+                "family_name": {
+                  "example": "any"
+                },
+                "name": {
+                  "example": "any"
+                },
+                "day_joined": {
+                  "example": "any"
+                },
+                "groups": {
+                  "example": "any"
+                },
+                "sub": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           }
         }
       }

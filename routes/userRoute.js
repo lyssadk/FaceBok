@@ -1,12 +1,9 @@
 const router = require("express").Router();
+const user = require('../controllers/UserController');
 
-router.get("/:id", (req, res) => {
-    res.send("For getting one user")
-});
+router.get("/:id", user.getUser);
 
-router.post("/", (req, res) => {
-    res.send("For posting one user")
-});
+router.post("/", user.createUser);
 
 router.put("/:id", (req, res) => {
     res.send("For updating one user")
