@@ -8,6 +8,7 @@ const createUser = async (req, res) => {
     try {
       const { email, given_name, family_name, name, day_joined, groups, sub } =
         req.body;
+        //Need to check sub before continuing post process for any pre-existing account with same sub
       const userInfo = await UserModel.create({
         email, given_name, family_name, name, day_joined, groups, sub
       });
