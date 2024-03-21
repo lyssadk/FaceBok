@@ -1,20 +1,14 @@
 const router = require("express").Router();
+const settingsController = require("../controllers/settingsController");
 //GET/settings
-router.get("/", (req, res) => {
-  res.send("GET settings");
-});
+router.get("/:user_id", settingsController.getSettings);
 //POST/settings
-router.post("/", (req, res) => {
-  res.send("POST settings");
-});
+router.post("/:user_id", settingsController.createSettings);
+
 //PUT/settings/:settingId
-router.put("/:settingId", (req, res) => {
-  res.send("PUT settings");
-});
+router.put("/:user_id", settingsController.updateSettings);
 
 //DELETE/settings/:settingId
-router.delete("/:settingId", (req, res) => {
-  res.send("DELETE settings");
-});
+router.delete("/:user_id", settingsController.deleteSettings);
 
 module.exports = router;

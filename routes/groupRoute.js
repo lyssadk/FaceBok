@@ -1,28 +1,20 @@
 const router = require("express").Router();
+const groupController = require("../controllers/groupController");
+
 // //POST /group
- router.post("/", (req, res) => {
-   res.send("POST group");
- });
+ router.post("/", groupController.createGroup);
 
 // PUT /group/:groupId
-router.put("/:groupId", (req, res) => {
-  res.send("PUT group");
-});
+router.put("/:groupId", groupController.updateGroup);
 
 // GET /group/
-router.get("/", (req, res) => {
-  res.send("GET group");
-});
+router.get("/", groupController.getGroups);
 
 // GET /group/:groupId
-router.get("/:groupId", (req, res) => {
-  res.send("GET group");
-});
+router.get("/:groupId", groupController.getGroupById);
 
 // DELETE /group/:groupId
-router.delete("/:groupId", (req, res) => {
-  res.send("DELETE group");
-});
+router.delete("/:groupId", groupController.deleteGroup);
 
 
 module.exports = router;
