@@ -4,7 +4,7 @@ const validation = require('../middleware/validate');
 
 router.get("/:id", user.getUser);
 
-router.post("/", validation.userRules, user.createUser);
+router.post("/", validation.userRules, user.createUserAndLogin);
 
 router.put("/:id", validation.userRules, user.updateUser);
 
