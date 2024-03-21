@@ -4,20 +4,29 @@ dotenv.config();
 const { ObjectId } = require('mongodb');
 
 
-const createUser = async (req, res) => {
+const createUserAndLogin = async (req, res) => {
     try {
       const { email, given_name, family_name, name, day_joined, groups, sub } =
         req.body;
         //Need to check sub before continuing post process for any pre-existing account with same sub
+
+      const existingUserCheck = await UserModel.find({sub: sub});
+
+      console.log(existingUserCheck);
+
+      if (existingUserCheck.length > 0){
+        return res.status(200).send("User already exists and you are 'logged in'");
+      }
+
       const userInfo = await UserModel.create({
         email, given_name, family_name, name, day_joined, groups, sub
       });
       // console.log(messages);
       if (userInfo) {
-        res.status(201).send(`${userInfo}`);
+        return res.status(201).send(`${userInfo}`);
       }
     } catch (err) {
-      if (err) throw err;
+        return res.status(500).json({ error: err });
     }
   };
 
@@ -26,10 +35,11 @@ const createUser = async (req, res) => {
       const userInfo = await UserModel.find({sub: req.params.id});
       // console.log(messages);
       if (userInfo) {
-        res.status(200).json(userInfo);
+        return res.status(200).json(userInfo);
       }
+      return res.status(404).json({error: "User not found"});
     } catch (err) {
-      if (err) throw err;
+        return res.status(500).json({ error: err });
     }
   };
 
@@ -37,12 +47,11 @@ const createUser = async (req, res) => {
   const updateUser = async (req, res) => {
     try {
       const { id } = req.params;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Must use valid mongo id" });
+      }
       const { email, given_name, family_name, name } =
         req.body;
-  
-      if (!ObjectId.isValid(id)) {
-        res.status(400).json("Must use a valid user id to update a user.");
-      }
       
       //This method makes it so that the entire object is not replaced, only the specified fields
       const updatedUser = await UserModel.findOneAndUpdate(
@@ -61,9 +70,9 @@ const createUser = async (req, res) => {
         return res.status(400).json({ error: "User does not exist" });
       }
   
-      res.status(204).json(updatedUser);
+      return res.status(204).json(updatedUser);
     } catch (err) {
-      if (err) throw err;
+        return res.status(500).json({ error: err });
     }
   };
 
@@ -72,7 +81,7 @@ const createUser = async (req, res) => {
       const { id } = req.params;
   
       if (!ObjectId.isValid(id)) {
-        res.status(400).json("Must use a valid user id to delete a user.");
+        return res.status(400).json({ error: "Must use valid mongo id" });
       }
   
       const user = await UserModel.findOneAndDelete({ _id: id });
@@ -81,15 +90,15 @@ const createUser = async (req, res) => {
         return res.status(400).json({ error: "User does not exist" });
       }
   
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } catch (err) {
-      if (err) throw err;
+        return res.status(500).json({ error: err });
     }
   };
 
   module.exports = {
     getUser,
-    createUser,
+    createUserAndLogin,
     updateUser,
     deleteUser
   };
