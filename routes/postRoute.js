@@ -1,28 +1,19 @@
 const router = require("express").Router();
+const post = require('../controllers/PostController');
 
-router.get('/', (req, res) => {
-    res.send('Welcome to Posts');
-});
+router.get('/', post.getPosts);
 
-router.get('/:groupId', (req, res) => {
-    res.send('Welcome to your Group Posts');
-});
+router.get('/:groupId', post.getPostsByGroupId);
 
-router.post('/', (req, res) => {
-    res.send('Create a Post');
-});
+router.post('/', post.createPost);
 
 router.post('/:groupId', (req, res) => {
     res.send('Create a Post in your Group');
 });
 
-router.put('/:postId', (req, res) => {
-    res.send('Update a Post');
-});
+router.put('/:postId', post.updatePost);
 
-router.delete('/:postId', (req, res) => {
-    res.send('Delete a Post');
-});
+router.delete('/:postId', post.deletePost);
 
 
 module.exports = router;
