@@ -16,9 +16,12 @@ const getPosts = async (req, res) => {
 
 const getPostsByGroupId = async (req, res) => {
     try {
-      const postInfo = await PostModel.find({ group_id: req.params.groupId});
+      const groupId = parseInt(req.params.groupId);
+      const postInfo = await PostModel.find({ group_id: groupId});
       if (postInfo) {
         res.status(200).json(postInfo);
+      } else {
+        res.status(404).json({ message: 'No posts found for the specified group ID.' });
       }
     } catch (err) {
       if (err) throw err;
