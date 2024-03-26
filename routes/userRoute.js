@@ -1,16 +1,13 @@
 const router = require("express").Router();
 const user = require('../controllers/UserController');
+const validation = require('../middleware/validate');
 
 router.get("/:id", user.getUser);
 
-router.post("/", user.createUser);
+router.post("/", validation.userRules, user.createUserAndLogin);
 
-router.put("/:id", (req, res) => {
-    res.send("For updating one user")
-});
+router.put("/:id", validation.userRules, user.updateUser);
 
-router.delete("/:id", (req, res) => {
-    res.send("For deleting one user")
-});
+router.delete("/:id", user.deleteUser);
 
 module.exports = router;
