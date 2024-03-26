@@ -1,17 +1,14 @@
 const router = require("express").Router();
 const post = require('../controllers/PostController');
+const validation = require('../middleware/validatePost');
 
 router.get('/', post.getPosts);
 
 router.get('/:groupId', post.getPostsByGroupId);
 
-router.post('/', post.createPost);
+router.post('/', validation.postRules, post.createPost);
 
-router.post('/:groupId', (req, res) => {
-    res.send('Create a Post in your Group');
-});
-
-router.put('/:postId', post.updatePost);
+router.put('/:postId', validation.postRules, post.updatePost);
 
 router.delete('/:postId', post.deletePost);
 
